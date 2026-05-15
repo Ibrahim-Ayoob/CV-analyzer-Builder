@@ -192,3 +192,82 @@ def ai_analyze(text, stats, found, missing):
         return None, f"AI returned invalid JSON: {e}"
     except Exception as e:
         return None, f"Groq API error: {e}"
+    # ── Routes ─────────────────────────────────────────────────────────────────
+@app.route("/health")
+def health():
+    return jsonify({
+        "status":       "ok",
+        "pdf_support":  PDF_AVAILABLE,
+        "docx_support": DOCX_AVAILABLE,
+        "ai_ready":     bool(groq_client),
+        "ai_provider":  "Groq (llama-3.3-70b-versatile)",
+    })
+
+@app.route("/upload", methods=["POST"])
+def upload():
+    if "file" not in request.files:
+        return jsonify({"error": "No file field in request"}), 400
+    f = request.files["file"]
+    if not f.filename:
+        return jsonify({"error": "No file selected"}), 400
+    if not ok_file(f.filename):
+        return jsonify({"error": "Unsupported type – use PDF, DOCX or TXT"}), 400
+    f.seek(0, 2)
+    if f.tell() > MAX_MB:
+        return jsonify({"error": "File too large (max 10 MB)"}), 400
+    f.seek(0)
+    ext = f.filename.rsplit(".", 1)[1].lower()
+    with tempfile.NamedTemporaryFile(delete=False, suffix="." + ext) as tmp:
+        f.save(tmp.name); path = tmp.name
+    try:    text, err = extract(path, f.filename)
+    finally: os.unlink(path)
+    if err:           return jsonify({"error": f"Extraction failed: {err}"}), 500
+    if len(text) < 50: return jsonify({"error": "Too little text extracted – try a TXT copy"}), 422
+    return jsonify({"text": text, "word_count": len(text.split())})
+
+@app.route("/analyze", methods=["POST"])
+def analyze():
+    body  = request.get_json(silent=True) or {}
+    text  = body.get("text", "")
+    if len(text) < 50:
+        return jsonify({"error": "Text too short"}), 422
+    stats = structure_stats(text)
+    found, missing = detect_sections(text)
+    result, err = ai_analyze(text, stats, found, missing)
+    if err: return jsonify({"error": err}), 500
+    result["structure_info"] = stats
+    return jsonify(result)
+
+@app.route("/result", methods=["POST"])
+def result():
+    if "file" not in request.files:
+        return jsonify({"error": "No file provided"}), 400
+    f = request.files["file"]
+    if not f.filename or not ok_file(f.filename):
+        return jsonify({"error": "Invalid or unsupported file"}), 400
+    f.seek(0, 2)
+    if f.tell() > MAX_MB:
+        return jsonify({"error": "File too large"}), 400
+    f.seek(0)
+    ext = f.filename.rsplit(".", 1)[1].lower()
+    with tempfile.NamedTemporaryFile(delete=False, suffix="." + ext) as tmp:
+        f.save(tmp.name); path = tmp.name
+    try:    text, err = extract(path, f.filename)
+    finally: os.unlink(path)
+    if err or len(text) < 50:
+        return jsonify({"error": err or "Too little text extracted"}), 422
+    stats = structure_stats(text)
+    found, missing = detect_sections(text)
+    result, err = ai_analyze(text, stats, found, missing)
+    if err: return jsonify({"error": err}), 500
+    result["structure_info"] = stats
+    return jsonify(result)
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080))
+    print(f"\n{'='*48}")
+    print(f"  CV Analyzer backend — Groq AI")
+    print(f"  Running on http://localhost:{port}")
+    print(f"  Health: http://localhost:{port}/health")
+    print(f"{'='*48}\n")
+    app.run(debug=True, host="0.0.0.0", port=port)
