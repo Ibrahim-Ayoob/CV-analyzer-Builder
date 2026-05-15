@@ -1,15 +1,20 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, master ]
+    branches:
+      - backend-api
   pull_request:
-    branches: [ main, master ]
+    branches:
+      - backend-api
 
 jobs:
+
+  # ───────────────── FRONTEND TESTS ─────────────────
   frontend-tests:
     name: Frontend Tests
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -17,12 +22,38 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: 18
 
       - name: Install frontend dependencies
-        run: npm install
         working-directory: frontend
+        run: npm install
 
       - name: Run frontend tests
-        run: npm test --silent
         working-directory: frontend
+        run: npm test -- --watchAll=false
+
+
+  # ───────────────── BACKEND TESTS ─────────────────
+  backend-tests:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Run backend tests
+        working-directory: backend
+        run: pytest test_app.py -v
