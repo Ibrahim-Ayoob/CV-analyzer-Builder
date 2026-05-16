@@ -1,0 +1,272 @@
+﻿/* ══════════════════════════════════════════════════════════════════════════
+   CV BUILDER — UI styles
+══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Root layout ─────────────────────────────────────────────────────────── */
+.cb-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #0a0a0f;
+  font-family: 'Sora', sans-serif;
+  color: #e8e6e1;
+}
+
+/* ── Top bar ─────────────────────────────────────────────────────────────── */
+.cb-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 52px;
+  border-bottom: 1px solid #1e1e2e;
+  background: #0d0d15;
+  flex-shrink: 0;
+  gap: 1rem;
+}
+.cb-back {
+  background: none; border: 1px solid #2a2a3e; border-radius: 8px;
+  color: #9896a0; padding: 5px 12px; font-size: 13px; cursor: pointer;
+  font-family: 'Sora', sans-serif; white-space: nowrap;
+}
+.cb-back:hover { color: #e8e6e1; border-color: #3a3a52; }
+.cb-logo { font-size: 17px; font-weight: 300; white-space: nowrap; }
+.cb-logo strong { font-weight: 600; }
+.cb-topbar-center { flex: 1; text-align: center; }
+.cb-topbar-right { display: flex; align-items: center; gap: 10px; }
+
+.cb-tabs { display: flex; background: #12121a; border: 1px solid #2a2a3e; border-radius: 8px; overflow: hidden; }
+.cb-tab {
+  padding: 6px 14px; font-size: 13px; background: none; border: none;
+  color: #9896a0; cursor: pointer; font-family: 'Sora', sans-serif;
+}
+.cb-tab.active { background: #1e1e2e; color: #e8e6e1; }
+.cb-download {
+  background: #6366f1; color: #fff; border: none; border-radius: 8px;
+  padding: 7px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+  font-family: 'Sora', sans-serif; white-space: nowrap;
+}
+.cb-download:hover { background: #7c7ff3; }
+
+/* ── Body split ──────────────────────────────────────────────────────────── */
+.cb-body {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  flex: 1;
+  overflow: hidden;
+}
+.cb-form-col {
+  overflow-y: auto;
+  border-right: 1px solid #1e1e2e;
+  padding: 1rem;
+}
+.cb-preview-col {
+  overflow-y: auto;
+  background: #111118;
+  padding: 1.5rem;
+}
+.cb-preview-sticky { min-height: 100%; display: flex; justify-content: center; }
+.cb-preview-frame {
+  width: 100%;
+  max-width: 760px;
+}
+
+/* ── Template bar ────────────────────────────────────────────────────────── */
+.cb-template-bar {
+  background: #12121a;
+  border: 1px solid #1e1e2e;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+.cb-template-label { font-size: 11px; color: #5e5c68; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+.cb-template-options { display: flex; gap: 8px; flex-wrap: wrap; }
+.cb-tpl-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 500;
+  border: 1px solid #2a2a3e; background: #1a1a26; color: #9896a0;
+  cursor: pointer; font-family: 'Sora', sans-serif; transition: all 0.15s;
+}
+.cb-tpl-btn:hover { border-color: #3a3a52; color: #e8e6e1; }
+.cb-tpl-btn.active { border-color: var(--accent); color: #e8e6e1; background: #1e1e2e; }
+.cb-tpl-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── Section accordion ───────────────────────────────────────────────────── */
+.cb-section { margin-bottom: 8px; border: 1px solid #1e1e2e; border-radius: 10px; overflow: hidden; }
+.cb-section-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 11px 14px; background: #12121a; cursor: pointer; font-size: 13px; font-weight: 500;
+  border: none; width: 100%; color: #e8e6e1; font-family: 'Sora', sans-serif;
+}
+.cb-section-head:hover { background: #1a1a26; }
+.cb-chevron { font-size: 10px; color: #5e5c68; }
+.cb-section-body { padding: 12px 14px; background: #0d0d15; display: flex; flex-direction: column; gap: 8px; }
+
+/* ── Form fields ─────────────────────────────────────────────────────────── */
+.cb-field { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.cb-field.half { flex: 1; min-width: 0; }
+.cb-label { font-size: 11px; color: #5e5c68; text-transform: uppercase; letter-spacing: 0.6px; }
+.cb-input {
+  background: #12121a; border: 1px solid #2a2a3e; border-radius: 7px;
+  color: #e8e6e1; padding: 8px 10px; font-size: 13px;
+  font-family: 'Sora', sans-serif; outline: none; width: 100%; transition: border-color 0.15s;
+}
+.cb-input:focus { border-color: #6366f1; }
+.cb-input::placeholder { color: #3a3a52; }
+.cb-textarea { resize: vertical; min-height: 60px; }
+.cb-row { display: flex; gap: 8px; }
+
+/* ── Cards (exp, edu, etc.) ──────────────────────────────────────────────── */
+.cb-card {
+  background: #12121a; border: 1px solid #1e1e2e; border-radius: 8px;
+  padding: 12px; display: flex; flex-direction: column; gap: 8px;
+}
+.cb-card-head { display: flex; justify-content: space-between; align-items: center; }
+.cb-card-num { font-size: 11px; color: #5e5c68; font-weight: 500; }
+.cb-remove {
+  font-size: 11px; color: #f87171; background: none; border: 1px solid rgba(248,113,113,0.2);
+  border-radius: 5px; padding: 3px 8px; cursor: pointer; font-family: 'Sora', sans-serif;
+}
+.cb-remove:hover { background: rgba(248,113,113,0.1); }
+.cb-checkbox { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #9896a0; cursor: pointer; }
+.cb-checkbox input { accent-color: #6366f1; }
+
+.cb-bullets-label { font-size: 11px; color: #5e5c68; text-transform: uppercase; letter-spacing: 0.6px; margin-top: 4px; }
+.cb-bullet-row { display: flex; align-items: center; gap: 6px; }
+.cb-bullet-dot { color: #5e5c68; font-size: 14px; flex-shrink: 0; }
+.cb-bullet-input { flex: 1; }
+.cb-remove-bullet {
+  background: none; border: none; color: #3a3a52; font-size: 14px; cursor: pointer; padding: 0 4px; flex-shrink: 0;
+}
+.cb-remove-bullet:hover { color: #f87171; }
+.cb-add-bullet {
+  font-size: 12px; color: #6366f1; background: none; border: none; cursor: pointer;
+  padding: 4px 0; font-family: 'Sora', sans-serif; text-align: left;
+}
+
+.cb-add-btn {
+  width: 100%; padding: 9px; background: none; border: 1px dashed #2a2a3e;
+  border-radius: 8px; color: #9896a0; font-size: 13px; cursor: pointer;
+  font-family: 'Sora', sans-serif; transition: all 0.15s; margin-top: 4px;
+}
+.cb-add-btn:hover { border-color: #6366f1; color: #6366f1; }
+
+/* ── Mobile toggle ───────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .cb-body { grid-template-columns: 1fr; }
+  .hidden-mobile { display: none; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   CV PREVIEW STYLES — shared base + 4 templates
+══════════════════════════════════════════════════════════════════════════ */
+
+.cvp {
+  background: #fff;
+  color: #111;
+  font-family: 'Georgia', serif;
+  font-size: 11.5px;
+  line-height: 1.5;
+  min-height: 297mm;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.4);
+}
+
+/* Shared section */
+.cvp-section { padding: 0 0 14px; }
+.cvp-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-bottom: 1.5px solid;
+  padding-bottom: 4px;
+  margin-bottom: 10px;
+}
+.cvp-summary { color: #333; line-height: 1.6; }
+.cvp-entry { margin-bottom: 10px; }
+.cvp-entry-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  flex-wrap: wrap; gap: 4px;
+}
+.cvp-entry-title { font-weight: 700; font-size: 12px; }
+.cvp-entry-sub   { color: #444; font-size: 11.5px; }
+.cvp-entry-date  { font-size: 10.5px; color: #666; white-space: nowrap; }
+.cvp-bullets { margin: 5px 0 0 16px; padding: 0; }
+.cvp-bullets li { margin-bottom: 2px; color: #333; }
+.cvp-skill-row { display: flex; gap: 8px; margin-bottom: 4px; align-items: baseline; }
+.cvp-skill-label { font-weight: 700; font-size: 11px; min-width: 90px; color: #444; }
+.cvp-skill-val { color: #333; flex: 1; }
+.cvp-proj-tech { font-size: 10.5px; color: #666; margin: 3px 0 2px; font-style: italic; }
+.cvp-proj-desc { color: #333; margin: 0; }
+.cvp-contact-row { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 10.5px; color: #555; margin-top: 6px; }
+
+/* ── MODERN template ─────────────────────────────────────────────────────── */
+.cvp-modern .cvp-header-modern {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 28px 32px 20px;
+  background: var(--accent);
+  color: #fff;
+}
+.cvp-modern .cvp-header-left {}
+.cvp-modern .cvp-name  { font-size: 26px; font-weight: 700; margin: 0 0 4px; font-family: 'Sora', sans-serif; color: #fff; }
+.cvp-modern .cvp-title { font-size: 13px; opacity: 0.85; margin: 0; font-family: 'Sora', sans-serif; }
+.cvp-modern .cvp-header-right {
+  display: flex; flex-direction: column; gap: 3px; text-align: right;
+  font-size: 10.5px; opacity: 0.9; font-family: 'Sora', sans-serif;
+}
+.cvp-modern .cvp-body { padding: 20px 32px; }
+
+/* ── CLASSIC template ────────────────────────────────────────────────────── */
+.cvp-classic .cvp-header-classic {
+  padding: 28px 36px 16px;
+  text-align: center;
+}
+.cvp-classic .cvp-name  { font-size: 28px; font-weight: 700; margin: 0; letter-spacing: 1px; }
+.cvp-classic .cvp-title { font-size: 13px; color: #555; margin: 4px 0 0; letter-spacing: 0.5px; }
+.cvp-classic .cvp-contact-row { justify-content: center; }
+.cvp-classic .cvp-classic-line { height: 2px; margin: 14px 36px 0; }
+.cvp-classic .cvp-body { padding: 16px 36px; }
+.cvp-classic .cvp-section-title { font-size: 11px; letter-spacing: 1.5px; }
+
+/* ── MINIMAL template ────────────────────────────────────────────────────── */
+.cvp-minimal .cvp-header-minimal { padding: 32px 36px 16px; }
+.cvp-minimal .cvp-name  { font-size: 30px; font-weight: 300; margin: 0 0 6px; letter-spacing: -0.5px; font-family: 'Sora', sans-serif; }
+.cvp-minimal .cvp-minimal-sub { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px; }
+.cvp-minimal .cvp-title { font-size: 13px; color: #444; font-family: 'Sora', sans-serif; }
+.cvp-minimal .cvp-minimal-contacts { font-size: 10px; color: #888; font-family: 'Sora', sans-serif; }
+.cvp-minimal .cvp-minimal-rule { height: 1px; background: #ddd; margin: 12px 0 0; }
+.cvp-minimal .cvp-body { padding: 16px 36px; }
+.cvp-minimal .cvp-section-title { font-weight: 400; font-size: 11px; letter-spacing: 2px; color: #888 !important; border-color: #ddd !important; }
+.cvp-minimal .cvp-entry-title { font-weight: 600; }
+
+/* ── CREATIVE template ───────────────────────────────────────────────────── */
+.cvp-creative .cvp-header-creative {
+  padding: 30px 32px 22px;
+}
+.cvp-creative .cvp-name-creative  { font-size: 28px; font-weight: 700; color: #fff; margin: 0 0 4px; font-family: 'Sora', sans-serif; }
+.cvp-creative .cvp-title-creative { font-size: 13px; color: rgba(255,255,255,0.8); margin: 0; font-family: 'Sora', sans-serif; }
+.cvp-creative .cvp-contact-creative { color: rgba(255,255,255,0.85); }
+.cvp-creative .cvp-body { padding: 20px 32px; }
+.cvp-creative .cvp-section-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   PRINT styles — hides UI, prints only the CV
+══════════════════════════════════════════════════════════════════════════ */
+@media print {
+  body * { visibility: hidden; }
+  .cvp, .cvp * { visibility: visible; }
+  .cvp {
+    position: fixed;
+    top: 0; left: 0;
+    width: 210mm;
+    box-shadow: none;
+    font-size: 11px;
+  }
+  .cb-topbar, .cb-form-col, .cb-template-bar { display: none !important; }
+}
